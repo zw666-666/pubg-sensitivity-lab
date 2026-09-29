@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PUBG 灵敏度诊断工具</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="flow.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">SL</div>
+        <div><strong>SENSITIVITY LAB</strong><span>PUBG 枪控诊断</span></div>
+      </div>
+      <div class="rail-label">工作台</div>
+      <nav class="nav" aria-label="主导航">
+        <button class="nav-item active" data-view="dashboard"><span class="nav-index">01</span><span>概览</span></button>
+        <button class="nav-item" data-view="profile"><span class="nav-index">02</span><span>参数档案</span></button>
+        <button class="nav-item" data-view="field"><span class="nav-index">03</span><span>实战记录</span></button>
+        <details class="nav-advanced"><summary>辅助工具</summary><button class="nav-item" data-view="calibration"><span class="nav-index">A1</span><span>游戏内校准</span></button><button class="nav-item" data-view="trainer"><span class="nav-index">A2</span><span>诊断训练场</span></button><button class="nav-item" data-view="history"><span class="nav-index">A3</span><span>历史会话</span></button></details>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="safe-badge"><span class="status-dot"></span><span>本地运行 · 不接触游戏进程</span></div>
+        <div class="sidebar-tip">先固定变量，再判断趋势。</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><span class="eyebrow">DIAGNOSTIC CONSOLE</span><span id="pageContext">当前方案 · 1200 DPI</span></div>
+        <div class="top-actions"><div class="profile-switcher"><label for="profileSelect">方案</label><select id="profileSelect" aria-label="当前参数方案"></select></div><span class="connection" id="connectionStatus"><i></i>桌面服务已连接</span><button class="ghost-btn" id="quickNewSession">新建会话 <span>+</span></button></div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="view-head split-head">
+          <div><span class="eyebrow orange">BERYL / RED DOT / 50M</span><h1>把压枪拆成<br><em>可调的信号。</em></h1><p>当前数据表明你在垂直回拉和横向稳定之间存在折中。先测，再改。</p></div>
+          <div class="hero-readout"><span class="readout-label">当前诊断状态</span><strong id="dashboardProblem">尚未开始</strong><span id="dashboardConfidence">等待第一轮测试</span></div>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel signal-panel">
+            <div class="panel-top"><div><span class="eyebrow">SIGNAL MAP</span><h2>问题信号</h2></div><span class="panel-tag">实时摘要</span></div>
+            <div class="signal-bars">
+              <div class="signal-row"><span>垂直控制</span><div class="bar"><i id="signalVertical" style="width:0%"></i></div><b id="signalVerticalValue">暂无</b></div>
+              <div class="signal-row"><span>左右偏移</span><div class="bar"><i id="signalHorizontal" style="width:0%"></i></div><b id="signalHorizontalValue">暂无</b></div>
+              <div class="signal-row"><span>手部抖动</span><div class="bar"><i id="signalShake" style="width:0%"></i></div><b id="signalShakeValue">暂无</b></div>
+            </div>
+            <div class="panel-note">评分越高代表问题越明显。先看最突出的信号。</div>
+          </article>
+          <article class="panel next-panel">
+            <div class="panel-top"><div><span class="eyebrow">START HERE</span><h2>现在只做一件事</h2></div><span class="step-mark">01</span></div>
+            <div class="recommendation-copy" id="dashboardRecommendation"><strong>先完成 Beryl 红点 50 米基准测试</strong><p>不用先改参数。去实战记录，打 5 个弹匣，再回来告诉工具哪里不稳。</p></div>
+            <div class="guided-actions"><button class="primary-btn" id="dashboardPrimary" data-go="field">开始第一次测试</button><button class="ghost-btn" id="dashboardContinue" data-go="field" disabled>继续上次测试</button></div>
+            <button class="text-btn guide-settings" data-go="profile">高级设置：编辑参数档案</button>
+          </article>
+          <article class="panel profile-snapshot">
+            <div class="panel-top"><div><span class="eyebrow">ACTIVE PROFILE</span><h2>当前参数</h2></div><button class="text-btn" data-go="profile">编辑</button></div>
+            <div class="metric-grid"><div><span>DPI</span><strong id="snapDpi">1200</strong></div><div><span>总体</span><strong id="snapGeneral">40</strong></div><div><span>瞄准</span><strong id="snapAim">44</strong></div><div><span>开镜</span><strong id="snapAds">46</strong></div></div>
+            <div class="scope-line"><span>垂直增强</span><b id="snapVertical">2.0</b><span class="muted">已接近上限</span></div>
+          </article>
+        </div>
+        <details class="optional-tools"><summary>辅助工具（可选）：校准手感、诊断训练场、历史会话</summary><div class="workflow-grid"><button class="workflow-card" data-go="calibration"><span>01</span><strong>校准手感</strong><small>让训练场理解你的转动幅度</small></button><button class="workflow-card" data-go="trainer"><span>02</span><strong>分离问题</strong><small>垂直、横向、微调分别测</small></button><button class="workflow-card" data-go="history"><span>03</span><strong>查看历史</strong><small>回看每轮参数变化和建议</small></button></div></details>
+      </section>
+
+      <section class="view" id="view-profile">
+        <div class="view-head"><span class="eyebrow orange">02 / PROFILE</span><h1>参数档案</h1><p>先把会影响手感的变量收齐，推荐才有上下文。</p></div>
+        <form class="panel form-panel" id="profileForm">
+          <div class="form-section"><div class="form-section-title"><span>01</span><div><strong>设备与系统</strong><small>保持 Windows 加速关闭，避免额外变量</small></div></div><div class="form-grid three"><label>方案名称<input id="profileName" type="text" /></label><label>鼠标型号<input id="mouseModel" type="text" /></label><label>DPI<input id="dpi" type="number" min="100" max="26000" /></label><label>回报率<input id="pollingRate" type="number" min="125" step="125" /></label><label>Windows 指针速度<input id="windowsPointer" type="number" min="1" max="11" /></label><label class="check-field"><input id="windowsAccel" type="checkbox" /> 提高指针精确度</label></div></div>
+          <div class="form-section"><div class="form-section-title"><span>02</span><div><strong>画面与 PUBG</strong><small>显示器参数用于校准和解释视角差异</small></div></div><div class="form-grid three"><label>分辨率<input id="resolution" type="text" /></label><label>刷新率<input id="refreshRate" type="number" /></label><label>画面比例<input id="aspectRatio" type="text" /></label><label>总体灵敏度<input id="general" type="number" step="1" min="1" max="100" /></label><label>垂直灵敏度增强<input id="verticalMultiplier" type="number" step="0.1" min="0.5" max="2" /></label><label>瞄准灵敏度<input id="aim" type="number" min="1" max="100" /></label><label>开镜模式灵敏度<input id="ads" type="number" min="1" max="100" /></label></div></div>
+          <div class="form-section"><div class="form-section-title"><span>03</span><div><strong>倍镜灵敏度</strong><small>高倍镜独立记录，避免用近距离手感推断</small></div></div><div class="form-grid seven scope-grid"><label>红点<input id="scopeRedDot" type="number" min="1" max="100" /></label><label>2 倍<input id="scope2x" type="number" min="1" max="100" /></label><label>3 倍<input id="scope3x" type="number" min="1" max="100" /></label><label>4 倍<input id="scope4x" type="number" min="1" max="100" /></label><label>6 倍<input id="scope6x" type="number" min="1" max="100" /></label><label>8 倍<input id="scope8x" type="number" min="1" max="100" /></label><label>15 倍<input id="scope15x" type="number" min="1" max="100" /></label></div></div>
+          <div class="form-actions"><span id="profileStatus" class="inline-status"></span><button type="button" class="ghost-btn" id="duplicateProfile">另存为新方案</button><button type="submit" class="primary-btn">保存当前方案</button></div>
+        </form>
+      </section>
+
+      <section class="view" id="view-calibration">
+        <div class="view-head"><span class="eyebrow orange">03 / CALIBRATION</span><h1>游戏内校准</h1><p>用一次固定动作，让内部训练场只承担“比较趋势”的工作。</p></div>
+        <div class="calibration-layout"><div class="panel calibration-steps"><div class="panel-top"><div><span class="eyebrow">FIELD CHECK</span><h2>完成三步记录</h2></div><span class="panel-tag">一次性设置</span></div><div class="cal-step active"><span>01</span><div><strong>固定位置</strong><p>进入训练场，站在熟悉的平地位置，关闭任何会改变灵敏度的临时设置。</p></div></div><div class="cal-step"><span>02</span><div><strong>完成转动</strong><p>从一个固定参照物开始，匀速移动鼠标，记录转过的角度和使用的鼠标距离。</p></div></div><div class="cal-step"><span>03</span><div><strong>保存结果</strong><p>把测得的角度和距离输入右侧。工具只会得到一个相对校准因子。</p></div></div></div><form class="panel calibration-form" id="calibrationForm"><span class="eyebrow">INPUT</span><h2>你的校准数据</h2><label>鼠标移动距离（cm）<input id="calDistance" type="number" value="20" min="1" step="0.1" /></label><label>实际转动角度（度）<input id="calDegrees" type="number" value="180" min="1" step="1" /></label><label>重复次数<input id="calRepeats" type="number" value="3" min="1" max="10" /></label><div class="cal-result"><span>相对校准因子</span><strong id="calFactor">1.000</strong><small>因子只用于内部训练场映射</small></div><button class="primary-btn full" type="submit">保存校准结果</button><p class="form-hint" id="calibrationStatus">还没有保存本次校准。</p></form></div>
+      </section>
+
+      <section class="view" id="view-trainer">
+        <div class="view-head split-head compact"><div><span class="eyebrow orange">04 / TRAINER</span><h1>诊断训练场</h1><p>鼠标相对移动会被记录，训练结果用于比较，不代表 PUBG 内部物理复刻。</p></div><div class="trainer-state" id="trainerState">准备开始</div></div>
+        <div class="trainer-layout"><div class="panel trainer-panel"><div class="trainer-toolbar"><div class="mode-tabs"><button class="mode-tab active" data-mode="vertical" aria-pressed="true">垂直压枪</button><button class="mode-tab" data-mode="horizontal" aria-pressed="false">横向稳定</button><button class="mode-tab" data-mode="micro" aria-pressed="false">跟枪微调</button></div><button class="ghost-btn" id="trainerReset">重置</button></div><div class="canvas-wrap"><canvas id="trainerCanvas" width="900" height="470" aria-label="鼠标诊断训练区域"></canvas><div class="canvas-hint" id="canvasHint">点击开始后，把准星保持在目标区内</div></div><div class="trainer-bottom"><div class="trainer-instruction" id="trainerInstruction"><span class="eyebrow">VERTICAL CONTROL</span><strong>跟随上升目标，保持回拉平滑</strong><small>训练会模拟连续后坐力脉冲，观察你是否过量修正。</small></div><button class="primary-btn" id="trainerStart">开始训练</button></div></div><aside class="trainer-side"><div class="panel score-panel"><span class="eyebrow">LIVE SCORE</span><div class="score-number" id="trainerScore">--</div><span id="trainerScoreLabel">等待输入</span><div class="mini-stats"><div><span>垂直误差</span><b id="metricV">--</b></div><div><span>水平偏移</span><b id="metricH">--</b></div><div><span>平滑度</span><b id="metricS">--</b></div><div><span>目标保持率</span><b id="metricR">--</b></div></div></div><div class="panel trainer-note"><span class="eyebrow">WHY THIS TEST</span><p id="trainerWhy">垂直训练能先判断你是否真的需要更高的垂直回拉幅度。</p><button class="text-btn" id="saveTrainerResult" disabled>保存到实战记录</button></div></aside></div>
+      </section>
+
+      <section class="view" id="view-field">
+        <div class="view-head"><span class="eyebrow orange">05 / FIELD LOG</span><h1>实战记录</h1><p>固定 Beryl 红点 50 米场景，每轮只改一个主要变量。</p></div>
+        <div class="field-guide" aria-label="实战记录使用步骤"><div><span class="guide-kicker">当前任务</span><strong id="fieldGuideTitle">先建立一次基准测试</strong><p id="fieldGuideText">第一轮不改参数，只确认你当前的 Beryl 红点压枪表现。</p></div><div class="field-guide-steps"><span class="active">1 确认场景</span><span>2 PUBG 打 5 个弹匣</span><span>3 回来填表现</span></div></div>
+        <div class="field-layout"><form class="panel session-form" id="sessionForm"><div class="panel-top"><div><span class="eyebrow">STEP 1 / 场景</span><h2>先固定测试条件</h2></div><span class="panel-tag">新手默认</span></div><p class="field-helper">第一次请直接用下面的默认场景，不需要理解所有灵敏度选项。</p><div class="scene-summary"><div><span>枪械</span><strong id="sceneWeaponPreview">Beryl</strong></div><div><span>倍镜</span><strong id="sceneScopePreview">红点</strong></div><div><span>距离</span><strong id="sceneDistancePreview">50 米</strong></div></div><details class="advanced-session"><summary>更换枪械、倍镜或距离</summary><div class="form-grid three"><label>枪械<select id="weapon"><option>Beryl</option><option>M416</option><option>AKM</option></select></label><label>倍镜<select id="scope"><option>红点</option><option>全息</option><option>2倍</option><option>3倍</option><option>4倍</option></select></label><label>距离（米）<input id="distance" type="number" value="50" min="1" /></label><label class="wide-field">会话名称<input id="sessionTitle" value="Beryl 红点 50米" /></label></div></details><details class="advanced-session"><summary>更换本轮只测试的变量</summary><p class="field-helper">建议第一次固定测“开镜模式灵敏度”。每个会话只改一个变量。</p><label>本轮只改<select id="variable"><option value="ads" selected>开镜模式灵敏度（红点默认）</option><option value="scope">当前倍镜灵敏度</option><option value="vertical_multiplier">垂直灵敏度增强</option><option value="aim">瞄准灵敏度</option><option value="general">总体灵敏度</option><option value="none">保持不变，做重复验证</option></select></label></details><button class="primary-btn full" id="sessionSubmitBtn" type="submit">创建后去 PUBG 测试</button><p class="form-hint" id="sessionStatus">还没有开始。先点击上面的按钮。</p></form><form class="panel trial-form" id="trialForm"><div class="panel-top"><div><span class="eyebrow">STEP 3 / 回填 <span id="trialNumber">01</span></span><h2>打完 5 个弹匣后填写</h2></div><span class="panel-tag">只记事实</span></div><div class="trial-checklist" id="trialHint"><strong>还没开始测试</strong><span>先完成左侧“第 1 步”，再去 PUBG 打 5 个弹匣。</span></div><div class="severity-grid"><label><span>垂直压不住<small>枪口是否持续向上</small></span><select id="verticalControl"><option value="1">1 · 几乎没有</option><option value="2">2 · 轻微</option><option value="3" selected>3 · 明显</option><option value="4">4 · 严重</option><option value="5">5 · 持续失控</option></select></label><label><span>左右乱飘<small>准星是否来回摆</small></span><select id="horizontalDrift"><option value="1">1 · 几乎没有</option><option value="2">2 · 轻微</option><option value="3" selected>3 · 明显</option><option value="4">4 · 严重</option><option value="5">5 · 持续失控</option></select></label><label><span>手部抖动<small>是否频繁小幅修正</small></span><select id="shake"><option value="1">1 · 几乎没有</option><option value="2">2 · 轻微</option><option value="3" selected>3 · 明显</option><option value="4">4 · 严重</option><option value="5">5 · 持续失控</option></select></label><label><span>整体稳定评分<small>这 5 个弹匣整体感觉</small></span><select id="stability"><option value="1">1 · 很差</option><option value="2">2 · 较差</option><option value="3" selected>3 · 一般</option><option value="4">4 · 稳定</option><option value="5">5 · 很稳</option></select></label></div><label class="toggle-field"><input id="overcompensation" type="checkbox" /> 有明显过补偿或压过头</label><label>备注<textarea id="trialNotes" rows="3" placeholder="例如：前两梭上抬，后面开始左右摆"></textarea></label><div class="form-actions"><button type="button" class="ghost-btn" id="newSessionFromTrial">重新建会话</button><button class="primary-btn" type="submit" id="saveTrialBtn" disabled>保存这 5 个弹匣</button></div></form></div><div class="panel recommendation-panel" id="fieldRecommendation"><div><span class="eyebrow">STEP 4 / 下一轮</span><h2>完成一轮后生成建议</h2><p>工具会告诉你下一轮只改哪个变量，以及建议范围。</p></div><div class="recommendation-placeholder">--</div></div></section>
+
+      <section class="view" id="view-history">
+        <div class="view-head split-head compact"><div><span class="eyebrow orange">06 / HISTORY</span><h1>历史会话</h1><p>每一次参数变化都留下依据，避免回到凭感觉乱调。</p></div><div class="history-actions"><button class="ghost-btn hidden" id="resetPreview">清空预览数据</button><button class="ghost-btn" id="importJson">导入 JSON</button><button class="ghost-btn" id="exportJson">导出当前 JSON</button><button class="ghost-btn" id="exportCsv">导出当前 CSV</button></div></div><div class="history-toolbar"><label for="historyFilter">筛选历史</label><input id="historyFilter" type="search" placeholder="按会话名、枪械、倍镜或诊断结果筛选" autocomplete="off" /><span id="historyCount"></span></div><div class="history-list" id="historyList"></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
